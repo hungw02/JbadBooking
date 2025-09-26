@@ -1,0 +1,49 @@
+@use "variables" as *;
+
+// Sidebar
+.sidebar-item.active div {
+    border-left: 4px solid $primary-color;
+    background-color: rgba(0, 180, 216, 0.1);
+    color: $text-light;
+}
+
+#sidebar-owner:not(:hover) .sidebar-item div i {
+    margin: 0 auto;
+}
+
+#sidebar-owner .sidebar-item span {
+    transform: translateX(-10px);
+    transition:
+        opacity 0.3s ease,
+        transform 0.3s ease;
+}
+
+#sidebar-owner:hover .sidebar-item span {
+    opacity: 1 !important;
+    transform: translateX(0);
+}
+
+#main-content {
+    max-width: calc(100% - 4rem);
+    margin-left: 4rem;
+    transition:
+        margin-left 0.3s ease,
+        max-width 0.3s ease;
+}
+
+#sidebar-owner:hover ~ #main-content {
+    margin-left: 16rem;
+    max-width: calc(100% - 16rem);
+}
+
+#header-container {
+    width: calc(100% - 4rem);
+    transition:
+        width 0.3s ease,
+        margin-left 0.3s ease;
+}
+
+#sidebar-owner:hover ~ #header-container {
+    margin-left: 16rem;
+    width: calc(100% - 16rem);
+}

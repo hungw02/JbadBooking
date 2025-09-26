@@ -1,0 +1,11 @@
+require("./bootstrap.js");
+require("./modules/home.js");
+require("./modules/sidebar-owner.js");
+require("./modules/notification.js");
+require("./modules/teammate-finder.js");
+require("./modules/base-booking.js");
+require("./modules/single-booking.js");
+require("./modules/subscription-booking.js");
+require("./modules/booking-manager-user.js");
+require("./modules/booking-manager-owner.js");
+require("./modules/statistical.js");

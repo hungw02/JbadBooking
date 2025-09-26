@@ -1,0 +1,355 @@
+@use "variables" as *;
+
+// Basic status colors
+.available {
+  background-color: #10ff83;
+  z-index: 1;
+}
+
+.single-booking {
+  background-color: #f87171;
+  z-index: 3; /* Ưu tiên cao nhất */
+}
+
+.subscription-booking {
+  background-color: #9333ea;
+  position: relative;
+  z-index: 3; /* Ưu tiên cao nhất */
+  
+  &.booked-start-half {
+    background: linear-gradient(to right, #f3f4f6 50%, #9333ea 50%) !important;
+  }
+  
+  &.booked-end-half {
+    background: linear-gradient(to right, #9333ea 50%, #f3f4f6 50%) !important;
+  }
+}
+
+.selected {
+  background-color: #60a5fa;
+  z-index: 2; /* Ưu tiên trung bình */
+}
+
+// Court timeline and slots
+.court-timeline {
+  .grid-cols-19 {
+    display: grid;
+    grid-template-columns: repeat(21, minmax(0, 1fr));
+  }
+
+  .time-header {
+    grid-template-columns: repeat(21, minmax(0, 1fr));
+    display: grid;
+    margin-left: 5px;
+    font-size: 0.75rem;
+    border-bottom: 1px solid #e6e6e6;
+    margin-bottom: 0.5rem;
+  }
+
+  .time-slots {
+    display: grid;
+    grid-template-columns: repeat(19, minmax(0, 1fr));
+    gap: 2px;
+  }
+}
+
+// Time slot styling
+.time-slot {
+  height: 30px;
+  border-radius: 2px;
+  overflow: hidden;
+  position: relative;
+
+  // Selected time slots - Ưu tiên thấp hơn các ô đã đặt
+  &.selected-start-half {
+    position: relative;
+    z-index: 2;
+
+    &:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 50%;
+      height: 100%;
+      background-color: #10ff83;
+      pointer-events: none;
+      z-index: 1;
+    }
+    
+    &:after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 50%;
+      width: 50%;
+      height: 100%;
+      background-color: #60a5fa;
+      pointer-events: none;
+      z-index: 2;
+    }
+  }
+
+  &.selected-end-half {
+    border-radius: 2px;
+    position: relative;
+    z-index: 2;
+
+    &:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 50%;
+      height: 100%;
+      background-color: #60a5fa;
+      pointer-events: none;
+      z-index: 2;
+    }
+    
+    &:after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 50%;
+      width: 50%;
+      height: 100%;
+      background-color: #10ff83;
+      pointer-events: none;
+      z-index: 1;
+    }
+  }
+  
+  // Standard booked time slots - Ưu tiên cao nhất
+  &.booked-start-half {
+    position: relative;
+    z-index: 3;
+
+    &:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 50%;
+      height: 100%;
+      background-color: #10ff83;
+      pointer-events: none;
+      z-index: 1;
+    }
+    
+    &:after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 50%;
+      width: 50%;
+      height: 100%;
+      background-color: #f87171;
+      pointer-events: none;
+      z-index: 3;
+    }
+  }
+  
+  &.booked-end-half {
+    position: relative;
+    z-index: 3;
+
+    &:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 50%;
+      height: 100%;
+      background-color: #f87171;
+      pointer-events: none;
+      z-index: 3;
+    }
+    
+    &:after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 50%;
+      width: 50%;
+      height: 100%;
+      background-color: #10ff83;
+      pointer-events: none;
+      z-index: 1;
+    }
+  }
+  
+  // Partial time slots
+  &.partial {
+    &.starts-half {
+      position: relative;
+
+      &:before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 50%;
+        height: 100%;
+        background-color: #10ff83;
+        pointer-events: none;
+      }
+      
+      &:after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 50%;
+        width: 50%;
+        height: 100%;
+        pointer-events: none;
+      }
+
+      &.single-booking:after {
+        background-color: #f87171;
+      }
+
+      &.subscription-booking:after {
+        background-color: #9333ea;
+      }
+    }
+
+    &.ends-half {
+      position: relative;
+
+      &:before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 50%;
+        height: 100%;
+        pointer-events: none;
+      }
+      
+      &:after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 50%;
+        width: 50%;
+        height: 100%;
+        background-color: #10ff83;
+        pointer-events: none;
+      }
+
+      &.single-booking:before {
+        background-color: #f87171;
+      }
+
+      &.subscription-booking:before {
+        background-color: #9333ea;
+      }
+    }
+  }
+}
+
+// Subscription booking styling
+.subscription-icon {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  color: white;
+  font-weight: bold;
+}
+
+.single-booking-half {
+  &.booked-start-half:after,
+  &.booked-end-half:before {
+    background-color: #f87171 !important;
+  }
+}
+
+.subscription-booking-half {
+  &.booked-start-half:after,
+  &.booked-end-half:before {
+    background-color: #9333ea !important;
+  }
+}
+
+// Form elements styling
+// Radio buttons
+.radio-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  cursor: pointer;
+
+  input[type="radio"] {
+    display: none;
+  }
+
+  .radio-custom {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 2px solid #ccc;
+    margin-right: 10px;
+    position: relative;
+
+    &:after {
+      content: '';
+      width: 10px;
+      height: 10px;
+      background-color: #60a5fa;
+      border-radius: 50%;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0);
+      transition: all 0.2s ease;
+    }
+  }
+
+  input[type="radio"]:checked+.radio-custom:after {
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+// Checkbox styling
+.court-select-container {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+
+  input[type="checkbox"] {
+    display: none;
+  }
+
+  .checkbox-custom {
+    width: 20px;
+    height: 20px;
+    border: 2px solid #6e6e6e;
+    border-radius: 2px;
+    margin-right: 10px;
+    position: relative;
+
+    &:after {
+      content: '';
+      width: 5px;
+      height: 10px;
+      border: solid #60a5fa;
+      border-width: 0 2px 2px 0;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) rotate(45deg) scale(0);
+      transition: all 0.2s ease;
+    }
+  }
+
+  input[type="checkbox"]:checked+.checkbox-custom:after {
+    transform: translate(-50%, -50%) rotate(45deg) scale(1);
+  }
+}
